@@ -1,8 +1,9 @@
 # Aldo, Giovanni e Giacomo SlackApp 
-
-[Italian Version](#italian-version-) <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/146/flag-for-italy_1f1ee-1f1f9.png" width="30" height="25">
+[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://slack.com/oauth/authorize?client_id=744917847047.745107739717&scope=commands,bot)
 
 ![](https://media.giphy.com/media/Rl5QI9hgpOYGEZNIay/giphy.gif)
+
+[Italian Version](#italian-version-) <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/146/flag-for-italy_1f1ee-1f1f9.png" width="30" height="25">
 
 ## English Version <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/146/flag-for-united-kingdom_1f1ec-1f1e7.png" width="30" height="25">
 ## What is this?
@@ -24,6 +25,9 @@ During the dev process I used [Ngrok](https://ngrok.com) as tunnel for my localh
 If you like to give your contribution you need to create your *.env* file based on the keys I already declared in *.env.sample* and run ```npm install``` and then ```npm run```; from there you need to create a tunnel with *Ngrok* or wahtever you want.
 
 ##### Improvements and Pull Requests are welcome :smile:
+
+###### Privacy
+This app doesn't collect any kind of data.
 
 ---------------------------------------
 
