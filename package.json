@@ -1,0 +1,25 @@
+{
+  "name": "aldo-giovanni-giacomo-quotes",
+  "private": true,
+  "version": "1.1.0",
+  "description": "Slack app that give Aldo, Giovanni e Giacomo quotes by a slash command",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "authors": [
+    "Giuseppe Barbato"
+  ],
+  "engines": {
+    "node": ">=4.2.0",
+    "npm": ">=2.14.7"
+  },
+  "dependencies": {
+    "axios": "^0.18.1",
+    "body-parser": "^1.17.1",
+    "debug": "^3.1.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "tsscmp": "^1.0.6"
+  }
+}
