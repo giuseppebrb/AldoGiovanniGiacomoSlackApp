@@ -5,30 +5,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const qs = require('querystring');
 const signature = require('./verifySignature');
+const constants = require('./constants');
 const app = express();
-
-const names = ['Aldo Baglio', 'Giovanni Storti', 'Giacomo Poretti']
-
-const slackPostMessageURL = "https://slack.com/api/chat.postMessage";
-const endpointRandomQuote = "https://aldogiovannigiacomoapi.azurewebsites.net/api/quotes/random";
-const endpointRandomDialogue = "https://aldogiovannigiacomoapi.azurewebsites.net/api/dialogues/random";
-
-const aldoImageURLs = ["https://thumbs.gfycat.com/WarlikeHatefulBudgie-max-1mb.gif",
-                        "https://thumbs.gfycat.com/GiddyImpureKagu-small.gif",
-                        "https://thumbs.gfycat.com/ResponsibleEnchantingClownanemonefish-size_restricted.gif",
-                        "https://66.media.tumblr.com/9f3eb72d0b5040288a2b0100916758d7/tumblr_o0lha2eEDW1qjq7hxo3_250.gif",
-                        "https://thumbs.gfycat.com/ElasticDrearyAoudad-max-1mb.gif"
-                      ];
-const giovanniImageURLs = ["https://media.tenor.com/images/0e8e1407cb6d851636a756d26ec5d559/tenor.gif", 
-                           "https://media.tenor.com/images/865ecd81e4351ae57a9d529a96f48390/tenor.gif",
-                           "https://media1.tenor.com/images/9cca4d2c705c03457ea81a6fe017550d/tenor.gif?itemid=7306762",
-                           "https://66.media.tumblr.com/9f3eb72d0b5040288a2b0100916758d7/tumblr_o0lha2eEDW1qjq7hxo3_250.gif",
-                           "https://i.makeagif.com/media/5-25-2016/K9NNco.gif"
-                          ];
-const giacomoImageURLs = ["https://66.media.tumblr.com/tumblr_lx6lxx51Kn1qajasao5_250.gif",
-                          "https://media.tenor.com/images/d990830748a36bbd10a9c62617ddddd5/tenor.gif",
-                          "https://thumbs.gfycat.com/LeafyIdolizedArachnid-size_restricted.gif",
-                          "https://thumbs.gfycat.com/DisgustingAmbitiousAmericanavocet-size_restricted.gif"];
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -67,23 +45,23 @@ app.post('/command', (req, res) => {
 });
 
 function sendResponse(req, res, parametersText, content){
-  if(parametersText.length == 0 ||parametersText.toLowerCase() == 'random quote' || parametersText.toLowerCase() == 'quote') {
+  if(parametersText.length == 0 ||parametersText.toLowerCase() == constants.randomQuoteCommand || parametersText.toLowerCase() == constants.randomQuoteCommandShortcut) {
     sendQuote(req, res, content);
-  } else if (parametersText.toLowerCase() == 'random dialogue' || parametersText.toLowerCase() == 'dialogue') {
+  } else if (parametersText.toLowerCase() == constants.randomDialogueCommand || parametersText.toLowerCase() == constants.randomDialogueCommandShortcut) {
     sendDialouge(req, res, content)
   }
 }
 
 function getEndpointBasedOnParameters(parametersText) {
   switch (parametersText) {
-    case 'quote':
-    case 'random quote':
-      return endpointRandomQuote;
-    case 'dialogue':
-    case 'random dialogue':
-      return endpointRandomDialogue;
+    case constants.randomQuoteCommandShortcut:
+    case constants.randomQuoteCommand:
+      return constants.endpointRandomQuote;
+    case constants.randomDialogueCommandShortcut:
+    case constants.randomDialogueCommand:
+      return constants.endpointRandomDialogue;
     default:
-        return endpointRandomQuote;
+        return constants.endpointRandomQuote;
   }
 }
 
@@ -95,7 +73,7 @@ function sendQuote(request, response, quote) {
   const formattedQuoteContent = formatQuote(quote.content);
   const formattedMovieLink = getMovieURL(quote.movie);
 
-  axios.post(slackPostMessageURL, qs.stringify({
+  axios.post(constants.slackPostMessageURL, qs.stringify({
     token: process.env.SLACK_ACCESS_TOKEN,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
@@ -137,14 +115,11 @@ function formatQuote(quote){
 function sendDialouge(request, response, dialogue){
   const requestBody = request.body;
   const formattedDialogueContent = formatDialogue(dialogue.content);
-  console.log(formattedDialogueContent);
-  console.log("------------");
-  console.log(formattedDialogueContent.trim());
   const formattedMovieLink = getMovieURL(dialogue.movie);
   const moviePosterURL = getMoviePoster(dialogue.movie);
 
 
-  axios.post(slackPostMessageURL, qs.stringify({
+  axios.post(constants.slackPostMessageURL, qs.stringify({
     token: process.env.SLACK_ACCESS_TOKEN,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
@@ -178,13 +153,7 @@ function sendDialouge(request, response, dialogue){
 }
 
 function formatDialogue(dialogue) {
-  var formattedDialogue = dialogue.replace(/Aldo:/g, '*Aldo:*');
-  formattedDialogue = formattedDialogue.replace(/Giovanni:/g, '*Giovanni:*');
-  formattedDialogue = formattedDialogue.replace(/Giacomo:/g, '*Giacomo:*');
-
-  formattedDialogue = formattedDialogue.replace(/Al:/g, '*Al:*');
-  formattedDialogue = formattedDialogue.replace(/John:/g, '*John:*');
-  formattedDialogue = formattedDialogue.replace(/Jack:/g, '*Jack:*');
+  var formattedDialogue = dialogue.replace(/(^(.+?):)/gm, '*$1*');
 
   formattedDialogue = formattedDialogue.replace(/\[/g, '_[');
   formattedDialogue = formattedDialogue.replace(/\]/g, ']_');
@@ -255,12 +224,12 @@ function getMoviePoster(movieTitle) {
 
 function getActorImage(actorName){
   switch (actorName) {
-    case names[0]:
-      return aldoImageURLs[Math.floor(Math.random() * aldoImageURLs.length)];
-    case names[1]:
-      return giovanniImageURLs[Math.floor(Math.random() * giovanniImageURLs.length)];
-    case names[2]:
-        return giacomoImageURLs[Math.floor(Math.random() * giacomoImageURLs.length)];
+    case constants.names[0]:
+      return constants.aldoImageURLs[Math.floor(Math.random() * constants.aldoImageURLs.length)];
+    case constants.names[1]:
+      return constants.giovanniImageURLs[Math.floor(Math.random() * constants.giovanniImageURLs.length)];
+    case constants.names[2]:
+        return constants.giacomoImageURLs[Math.floor(Math.random() * constants.giacomoImageURLs.length)];
     default:
       break;
   }
@@ -268,11 +237,11 @@ function getActorImage(actorName){
 
 function formatActorName(fullname) {
   switch (fullname) {
-    case names[0]:
+    case constants.names[0]:
       return 'Aldo'
-    case names[1]:
+    case constants.names[1]:
       return 'Giovanni'
-    case names[2]:
+    case constants.names[2]:
       return 'Giacomo'
     default:
       break;
@@ -281,7 +250,7 @@ function formatActorName(fullname) {
 
 function sendHelpMessage(request, response) {
   const requestBody = request.body;
-  axios.post(slackPostMessageURL, qs.stringify({
+  axios.post(constants.slackPostMessageURL, qs.stringify({
     token: process.env.SLACK_ACCESS_TOKEN,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
