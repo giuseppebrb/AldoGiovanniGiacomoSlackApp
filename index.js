@@ -66,6 +66,7 @@ function getEndpointBasedOnParameters(parametersText) {
 }
 
 function sendQuote(request, response, quote) {
+  console.log('request', request);
   const requestBody = request.body;
 
   const actorImageURL = getActorImage(quote.actor);
