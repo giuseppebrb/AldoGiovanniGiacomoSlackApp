@@ -28,7 +28,7 @@ const giovanniImageURLs = ["https://media.tenor.com/images/0e8e1407cb6d851636a75
     "https://i.makeagif.com/media/5-25-2016/K9NNco.gif",
     "https://media.tenor.com/images/9e5c1d6b5745d42118346168d7a4d6de/tenor.gif",
     "https://thumbs.gfycat.com/BrightVariableCoelacanth-size_restricted.gif",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxogyl9CUF0G2Sq7_u0EO5H-yf5uAofKkgRTsG8pHk5xiZot5q"
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxogyl9CUF0G2Sq7_u0EO5H-yf5uAofKkgRTsG8pHk5xiZot5q",
     "https://thumbs.gfycat.com/AdmiredAccomplishedAmericancurl-size_restricted.gif",
     "https://thumbs.gfycat.com/UnhappyDirtyHylaeosaurus-size_restricted.gif"
 ];
