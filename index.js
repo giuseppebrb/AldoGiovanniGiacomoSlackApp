@@ -254,8 +254,9 @@ function formatActorName(fullname) {
 
 function sendHelpMessage(request, response) {
   const requestBody = request.body;
+  const oauthToken = storage.getItemSync(request.body.team_id);
   axios.post(constants.slackPostMessageURL, qs.stringify({
-    token: process.env.SLACK_ACCESS_TOKEN,
+    token: oauthToken,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
       {
