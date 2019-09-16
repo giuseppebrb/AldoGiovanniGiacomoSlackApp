@@ -7,6 +7,9 @@ const qs = require('querystring');
 const signature = require('./verifySignature');
 const constants = require('./constants');
 const app = express();
+const request = require('request');
+const storage = require('node-persist'); 
+storage.initSync();
 
 const rawBodyBuffer = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -72,9 +75,10 @@ function sendQuote(request, response, quote) {
   const formattedActorName = formatActorName(quote.actor);
   const formattedQuoteContent = formatQuote(quote.content);
   const formattedMovieLink = getMovieURL(quote.movie);
+  const oauthToken = storage.getItemSync(request.body.team_id);
 
   axios.post(constants.slackPostMessageURL, qs.stringify({
-    token: process.env.SLACK_ACCESS_TOKEN,
+    token: oauthToken,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
       {
@@ -117,10 +121,10 @@ function sendDialouge(request, response, dialogue){
   const formattedDialogueContent = formatDialogue(dialogue.content);
   const formattedMovieLink = getMovieURL(dialogue.movie);
   const moviePosterURL = getMoviePoster(dialogue.movie);
-
+  const oauthToken = storage.getItemSync(request.body.team_id);
 
   axios.post(constants.slackPostMessageURL, qs.stringify({
-    token: process.env.SLACK_ACCESS_TOKEN,
+    token: oauthToken,
     channel: requestBody.channel_id,
     blocks: JSON.stringify([
       {
@@ -305,3 +309,23 @@ function sendHelpMessage(request, response) {
   })
 }
 
+app.get('/auth', function(req, res){
+  if (!req.query.code) { // access denied
+    console.log('Access denied');
+    return;
+  }
+  var data = {form: {
+    client_id: process.env.SLACK_CLIENT_ID,
+    client_secret: process.env.SLACK_CLIENT_SECRET,
+    code: req.query.code
+  }};
+  request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+
+      // Get an auth token (and store the team_id / token)
+      storage.setItemSync(JSON.parse(body).team_id, JSON.parse(body).access_token);
+      res.sendStatus(200);
+      res.redirect("https://aldogiovannigiacomoslack.azurewebsites.net/");
+    }
+  })
+});

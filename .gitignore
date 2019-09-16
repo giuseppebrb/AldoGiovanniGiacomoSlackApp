@@ -1,3 +1,5 @@
+.history
+.node-persist
 # Logs
 logs
 *.log
