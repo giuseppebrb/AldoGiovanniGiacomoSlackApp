@@ -1,5 +1,5 @@
 # Aldo, Giovanni e Giacomo SlackApp 
-<a href="https://slack.com/oauth/authorize?client_id=744917847047.745107739717&scope=commands,bot"><img src="https://www.eletype.com/wp-content/uploads/Add-to-Slack-Button@2x.png" height="48"></a>
+<a href="https://slack.com/oauth/authorize?client_id=744917847047.745107739717&scope=commands,bot,chat:write:bot"><img src="https://www.eletype.com/wp-content/uploads/Add-to-Slack-Button@2x.png" height="48"></a>
 
 ![](https://media.giphy.com/media/Rl5QI9hgpOYGEZNIay/giphy.gif)
 
