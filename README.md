@@ -22,7 +22,7 @@ The layout is written using the [Blocks approach](https://api.slack.com/block-ki
 
 During the dev process I used [Ngrok](https://ngrok.com) as tunnel for my localhost to remote.
 
-If you like to give your contribution you need to create your *.env* file based on the keys I already declared in *.env.sample* and run ```npm install``` and then ```npm run```; from there you need to create a tunnel with *Ngrok* or wahtever you want.
+If you like to give your contribution you need to create your *.env* file based on the keys I already declared in *.env.sample* and run ```npm install``` and then ```npm start```; from there you need to create a tunnel with *Ngrok* or wahtever you want.
 
 ##### Improvements and Pull Requests are welcome :smile:
 
@@ -48,5 +48,5 @@ Per la parte di creazione dei layout dei messaggi ho utilizzato l'[approccio a B
 
 Durante la fase di sviluppo ho utilizzato [Ngrok](https://ngrok.com) per creare un tunnel tra il mio localhost e un host remoto.
 
-Se vuoi dare il tuo contributo basta creare un file *.env* sulla scorta delle chiavi che ho già dichiarato all'interno di *.env.sample* e popolarle con i propri valori. Dopodiché lanciare ```npm install``` e ```npm run```; da qui in poi basta creare un tunnel con *Ngrok* o altro.
+Se vuoi dare il tuo contributo basta creare un file *.env* sulla scorta delle chiavi che ho già dichiarato all'interno di *.env.sample* e popolarle con i propri valori. Dopodiché lanciare ```npm install``` e ```npm start```; da qui in poi basta creare un tunnel con *Ngrok* o altro.
 ##### Qualsiasi miglioria o Pull Request è ben accetta :smile:
