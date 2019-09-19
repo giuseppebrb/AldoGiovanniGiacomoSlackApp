@@ -17,7 +17,7 @@ If you don't type any argument after the base command you will get a random quot
 The project has no profit purpose and it's just for fun. I wanted to learn how to create Slack apps and also I wanted to use the API I already created. You can check that project at this repository: [AldoGiovanniGiacomo.API](https://github.com/giuseppebrb/AldoGiovanniGiacomo.API)
 
 ##  Tech Details
-This app is written in *Node.js* and hosted on [Heroku](https://www.heroku.com/).
+This app is written in *Node.js* and hosted on Azure.
 The layout is written using the [Blocks approach](https://api.slack.com/block-kit) suggested by Slack itself.
 
 During the dev process I used [Ngrok](https://ngrok.com) as tunnel for my localhost to remote.
@@ -43,7 +43,7 @@ Sono ammesse anche le versioni ridotte dei comandi e cioè ```/aldogiovannigiaco
 Questo progetto ovviamente non ha fini di lucro ed è solo per puro intrattenimento. Volevo imparare a creare estensioni per Slack e volevo utilizzare delle API in ASP.NET Core che avevo già creato. Il progetto delle API a cui faccio riferimento lo potete trovare qui: [AldoGiovanniGiacomo.API](https://github.com/giuseppebrb/AldoGiovanniGiacomo.API)
 
 ## Dettagli Tecnici
-L'app è stata scritta in *Node.js* ed è hostata su [Heroku](https://www.heroku.com/).
+L'app è stata scritta in *Node.js* ed è hostata su Azure.
 Per la parte di creazione dei layout dei messaggi ho utilizzato l'[approccio a Blocks](https://api.slack.com/block-kit) suggerito da Slack stesso.
 
 Durante la fase di sviluppo ho utilizzato [Ngrok](https://ngrok.com) per creare un tunnel tra il mio localhost e un host remoto.
