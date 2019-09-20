@@ -325,8 +325,9 @@ app.get('/auth', function(req, res){
 
       // Get an auth token (and store the team_id / token)
       storage.setItemSync(JSON.parse(body).team_id, JSON.parse(body).access_token);
-      res.sendStatus(200);
-      res.redirect("https://aldogiovannigiacomoslack.azurewebsites.net/");
+      res.redirect("https://aldogiovannigiacomoslack.azurewebsites.net/install_success.html");
+    } else {
+      res.redirect("https://aldogiovannigiacomoslack.azurewebsites.net/install_error.html");
     }
   })
 });
