@@ -5,7 +5,6 @@ const randomDialogueCommandShortcut = 'dialogue';
 
 const names = ['Aldo Baglio', 'Giovanni Storti', 'Giacomo Poretti'];
 
-const slackPostMessageURL = "https://slack.com/api/chat.postMessage";
 const endpointRandomQuote = "https://aldogiovannigiacomoapi.azurewebsites.net/api/quotes/random";
 const endpointRandomDialogue = "https://aldogiovannigiacomoapi.azurewebsites.net/api/dialogues/random";
 
@@ -50,7 +49,6 @@ module.exports = {
     randomDialogueCommand,
     randomDialogueCommandShortcut,
     names,
-    slackPostMessageURL,
     endpointRandomQuote,
     endpointRandomDialogue,
     aldoImageURLs,

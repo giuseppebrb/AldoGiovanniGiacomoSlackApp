@@ -3,7 +3,6 @@ require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
-const qs = require('querystring');
 const signature = require('./verifySignature');
 const constants = require('./constants');
 const app = express();
@@ -35,7 +34,7 @@ app.post('/command', (req, res) => {
   if (signature.isVerified(req)) {
     res.send();
     if (commandText.toLowerCase() == 'help') {
-      sendHelpMessage(req, res);
+      sendHelpMessage(req);
     } else {
       var endpoint = getEndpointBasedOnParameters(commandText)
       axios.get(endpoint).then((result) => {
@@ -70,6 +69,8 @@ function getEndpointBasedOnParameters(parametersText) {
 
 function sendQuote(request, response, quote) {
   const requestBody = request.body;
+  const responseUrl = String(requestBody.response_url);
+  console.log("responseUrl: " + responseUrl);
 
   const actorImageURL = getActorImage(quote.actor);
   const formattedActorName = formatActorName(quote.actor);
@@ -77,9 +78,9 @@ function sendQuote(request, response, quote) {
   const formattedMovieLink = getMovieURL(quote.movie);
   const oauthToken = storage.getItemSync(request.body.team_id);
 
-  axios.post(constants.slackPostMessageURL, qs.stringify({
+  axios.post(responseUrl, {
     token: oauthToken,
-    channel: requestBody.channel_id,
+    response_type: "in_channel",
     blocks: JSON.stringify([
       {
         "type": "section",
@@ -103,8 +104,8 @@ function sendQuote(request, response, quote) {
         ]
       }
     ])
-  })).then((result) => {
-    response.send('');
+  }).then((result) => {
+    console.log("Successfull quote response");
   }).catch((err) => {
     console.error(err);
   });
@@ -118,14 +119,16 @@ function formatQuote(quote){
 
 function sendDialouge(request, response, dialogue){
   const requestBody = request.body;
+  const responseUrl = String(requestBody.response_url);
+  console.log("responseUrl: " + responseUrl);
   const formattedDialogueContent = formatDialogue(dialogue.content);
   const formattedMovieLink = getMovieURL(dialogue.movie);
   const moviePosterURL = getMoviePoster(dialogue.movie);
   const oauthToken = storage.getItemSync(request.body.team_id);
 
-  axios.post(constants.slackPostMessageURL, qs.stringify({
+  axios.post(responseUrl, {
     token: oauthToken,
-    channel: requestBody.channel_id,
+    response_type: "in_channel",
     blocks: JSON.stringify([
       {
         "type": "section",
@@ -149,8 +152,8 @@ function sendDialouge(request, response, dialogue){
         ]
       }
     ])
-  })).then((result) => {
-    response.send('');
+  }).then((result) => {
+    console.log("Successfull dialogue response");
   }).catch((err) => {
     console.error(err);
   });
@@ -252,12 +255,12 @@ function formatActorName(fullname) {
   }
 }
 
-function sendHelpMessage(request, response) {
-  const requestBody = request.body;
+function sendHelpMessage(request) {
   const oauthToken = storage.getItemSync(request.body.team_id);
-  axios.post(constants.slackPostMessageURL, qs.stringify({
+  const responseUrl = String(request.body.response_url);
+
+  axios.post(responseUrl, {
     token: oauthToken,
-    channel: requestBody.channel_id,
     blocks: JSON.stringify([
       {
         "type": "section",
@@ -305,8 +308,6 @@ function sendHelpMessage(request, response) {
         }
       }
     ])
-  })).then((result) => {
-    response.send('');
   })
 }
 
