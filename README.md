@@ -49,4 +49,5 @@ Per la parte di creazione dei layout dei messaggi ho utilizzato l'[approccio a B
 Durante la fase di sviluppo ho utilizzato [Ngrok](https://ngrok.com) per creare un tunnel tra il mio localhost e un host remoto.
 
 Se vuoi dare il tuo contributo basta creare un file *.env* sulla scorta delle chiavi che ho già dichiarato all'interno di *.env.sample* e popolarle con i propri valori. Dopodiché lanciare ```npm install``` e ```npm start```; da qui in poi basta creare un tunnel con *Ngrok* o altro.
+
 ##### Qualsiasi miglioria o Pull Request è ben accetta :smile:
